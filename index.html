@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What's for Dinner?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+    }
+    #result {
+      margin-top: 2rem;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>What's for Dinner?</h1>
+  <label for="ingredients">Enter Ingredients (comma-separated):</label>
+  <input type="text" id="ingredients" placeholder="e.g. chicken, rice, onion" />
+
+  <label for="cuisine">Select Cuisine:</label>
+  <select id="cuisine">
+    <option value="any">Any</option>
+    <option value="indian">Indian</option>
+    <option value="italian">Italian</option>
+    <option value="asian">Asian</option>
+    <option value="mexican">Mexican</option>
+    <option value="mediterranean">Mediterranean</option>
+  </select>
+
+  <button onclick="generateMeals()">Get Recipes</button>
+
+  <div id="result"></div>
+
+  <script>
+    const meals = {
+      indian: [
+        "Chicken Curry with Rice",
+        "Chana Masala with Roti",
+        "Vegetable Pulao with Raita"
+      ],
+      italian: [
+        "Pasta with Tomato Basil Sauce",
+        "Risotto with Mushrooms",
+        "Bruschetta with Mozzarella"
+      ],
+      asian: [
+        "Stir-fried Noodles",
+        "Fried Rice with Vegetables",
+        "Teriyaki Chicken Bowl"
+      ],
+      mexican: [
+        "Tacos with Salsa",
+        "Bean Burrito",
+        "Quesadilla with Cheese & Veggies"
+      ],
+      mediterranean: [
+        "Greek Salad with Feta",
+        "Falafel Wrap",
+        "Grilled Chicken with Couscous"
+      ],
+      any: [
+        "Omelette with Toast",
+        "Grilled Cheese Sandwich",
+        "Vegetable Soup"
+      ]
+    };
+
+    function generateMeals() {
+      const cuisine = document.getElementById("cuisine").value;
+      const allMeals = cuisine === "any" ? [].concat(...Object.values(meals)) : meals[cuisine];
+
+      const shuffled = allMeals.sort(() => 0.5 - Math.random());
+      const selected = shuffled.slice(0, 3);
+
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "<h3>Suggestions:</h3><ul>" + selected.map(meal => `<li>${meal}</li>`).join('') + "</ul>";
+    }
+  </script>
+</body>
+</html>
